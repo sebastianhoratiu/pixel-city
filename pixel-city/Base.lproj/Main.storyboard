@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_1" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,17 +15,17 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="MapVC" customModule="pixel_city" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="izT-FT-xM1">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsCompass="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izT-FT-xM1">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5b-dT-1yu">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="106"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="106"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Double-tap to drop a pin and view photos" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5s7-aN-YBq">
-                                        <rect key="frame" x="52" y="52" width="310.5" height="22"/>
+                                        <rect key="frame" x="32.333333333333343" y="52" width="310.33333333333326" height="22"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="310.5" id="7V8-UK-dwI"/>
                                             <constraint firstAttribute="height" constant="22" id="ij9-jk-l1g"/>
@@ -43,28 +43,42 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9nm-C6-dMI">
-                                <rect key="frame" x="327" y="795" width="67" height="67"/>
+                                <rect key="frame" x="288" y="691" width="67" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="67" id="nkg-OM-8HY"/>
                                     <constraint firstAttribute="height" constant="67" id="uzc-tv-bvi"/>
                                 </constraints>
                                 <state key="normal" image="locationButton"/>
+                                <connections>
+                                    <action selector="CenterMapBtnWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Deh-td-RrE"/>
+                                </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXK-z5-orx">
+                                <rect key="frame" x="0.0" y="812" width="375" height="0.0"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="pXK-z5-orx" secondAttribute="bottom" id="8t5-rc-vIZ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9nm-C6-dMI" secondAttribute="trailing" constant="20" id="HZn-R3-tE9"/>
                             <constraint firstItem="izT-FT-xM1" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Jpn-Jv-Xix"/>
                             <constraint firstAttribute="bottom" secondItem="izT-FT-xM1" secondAttribute="bottom" id="Pte-pl-fHh"/>
+                            <constraint firstItem="pXK-z5-orx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="ViE-4u-0zS"/>
                             <constraint firstItem="I5b-dT-1yu" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="j0D-Bi-YHL"/>
                             <constraint firstItem="izT-FT-xM1" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="jyj-zO-NUQ"/>
+                            <constraint firstItem="pXK-z5-orx" firstAttribute="top" secondItem="izT-FT-xM1" secondAttribute="bottomMargin" constant="34" id="lWy-v2-pHo"/>
                             <constraint firstItem="I5b-dT-1yu" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="lf8-RC-syZ"/>
-                            <constraint firstItem="9nm-C6-dMI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="sta-TH-SrY"/>
+                            <constraint firstItem="9nm-C6-dMI" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-20" id="pNe-3e-z8V"/>
+                            <constraint firstAttribute="trailing" secondItem="pXK-z5-orx" secondAttribute="trailing" id="so2-Zl-oDm"/>
                             <constraint firstItem="I5b-dT-1yu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="uOg-eS-v8O"/>
                             <constraint firstItem="izT-FT-xM1" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="wFT-MY-WJZ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="izT-FT-xM1" id="SOA-XQ-lMz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
