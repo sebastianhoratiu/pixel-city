@@ -45,17 +45,44 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
 extension MapVC: MKMapViewDelegate {
     func centerMapOnUserLocation() {
         guard let currentLocationCoordinate = locationManger.location?.coordinate else { return }
-        let coordinateRegion = MKCoordinateRegion(center: currentLocationCoordinate, latitudinalMeters: regionRadiusMeters, longitudinalMeters: regionRadiusMeters)
-        mapView.setRegion(coordinateRegion, animated: true)
+        centerMap(arround: currentLocationCoordinate)
     }
     
     @objc func dropPin(sender: UITapGestureRecognizer) {
+        removePin()
+        
         let touchPoint = sender.location(in: mapView)
         let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
         print(touchPoint, touchCoordinate)
+        
+        //This is just for my benefit; I'll probably remove it later
+        displayTouchCoordinate(touchPoint, touchCoordinate)
+        
+        let annotation = DroppablePin(coordinate: touchCoordinate, identifier: "droppablePin")
+        mapView.addAnnotation(annotation)
+        
+        centerMap(arround: touchCoordinate)
+    }
+    
+    func removePin() {
+        for annotation in mapView.annotations {
+            mapView.removeAnnotation(annotation)
+        }
+    }
+    
+    fileprivate func displayTouchCoordinate(_ touchPoint: CGPoint, _ touchCoordinate: CLLocationCoordinate2D) {
         let droppedPinAlertController = UIAlertController(title: "Dropped pin", message: "A pin was dropped at: \r- screen coordinates: \(touchPoint); \r- map coordinates: \(touchCoordinate);", preferredStyle: .alert)
         droppedPinAlertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         self.present(droppedPinAlertController, animated: true, completion: nil)
+    }
+    
+    fileprivate func centerMap(arround coordinate: CLLocationCoordinate2D) {
+        /*
+        This function was not in the lesson
+        I've created it because the same code was being used twice
+        */
+        let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRadiusMeters, longitudinalMeters: regionRadiusMeters)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
     
 }
