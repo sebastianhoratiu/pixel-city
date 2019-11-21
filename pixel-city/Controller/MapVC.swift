@@ -43,6 +43,15 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
 }
 
 extension MapVC: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        let pinAnnotation = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "droppablePin")
+        pinAnnotation.pinTintColor = #colorLiteral(red: 0.9647058824, green: 0.6509803922, blue: 0.137254902, alpha: 1)
+        return pinAnnotation
+    }
+    
     func centerMapOnUserLocation() {
         guard let currentLocationCoordinate = locationManger.location?.coordinate else { return }
         centerMap(arround: currentLocationCoordinate)
