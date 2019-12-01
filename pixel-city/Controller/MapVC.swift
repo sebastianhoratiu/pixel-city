@@ -95,16 +95,17 @@ extension MapVC: MKMapViewDelegate {
     
     @objc func dropPin(sender: UITapGestureRecognizer) {
         removePin()
-        animateViewUp()
         addSwipe()
         addSpinner()
         
         let touchPoint = sender.location(in: mapView)
         let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-        print(touchPoint, touchCoordinate)
+        print("screenSize=\(screenSize), touchPoint=\(touchPoint), touchCoordinate=\(touchCoordinate)")
         
         //This is just for my benefit; I'll probably remove it later
         displayTouchCoordinate(touchPoint, touchCoordinate)
+        
+        animateViewUp()
         
         let annotation = DroppablePin(coordinate: touchCoordinate, identifier: "droppablePin")
         mapView.addAnnotation(annotation)
