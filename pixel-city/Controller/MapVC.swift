@@ -23,7 +23,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
 
     
     var spinner = UIActivityIndicatorView(style: .whiteLarge)
-    var label: UILabel?
+    var progressLbl: UILabel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +52,22 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
         spinner.center = CGPoint(x: screenSize.width / 2, y: pullUpView.frame.height / 2)
         spinner.startAnimating()
         pullUpView.addSubview(spinner)
+    }
+    
+    func addProgressLbl() {
+        progressLbl = UILabel()
+        progressLbl?.frame = CGRect(x: (screenSize.width / 2) - 120, y: pullUpView.bounds.height / 2 + spinner.bounds.height / 2, width: 240, height: 40)
+        progressLbl?.font = UIFont(name: "Avenir Next", size: 18)
+        progressLbl?.textColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1)
+        progressLbl?.textAlignment = .center
+        progressLbl?.text = "12/40 PHOTOS LOADED"
+        pullUpView.addSubview(progressLbl!)
+    }
+    
+    func removeProgressLbl () {
+        if progressLbl != nil {
+            progressLbl?.removeFromSuperview()
+        }
     }
     
     func animateViewUp() {
@@ -95,6 +111,7 @@ extension MapVC: MKMapViewDelegate {
     
     @objc func dropPin(sender: UITapGestureRecognizer) {
         removePin()
+        removeProgressLbl()
         
         let touchPoint = sender.location(in: mapView)
         let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
@@ -110,6 +127,7 @@ extension MapVC: MKMapViewDelegate {
         
         animateViewUp()
         addSpinner()
+        addProgressLbl()
         addSwipe()
     }
     
