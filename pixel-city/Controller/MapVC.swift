@@ -24,6 +24,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     
     var spinner = UIActivityIndicatorView(style: .whiteLarge)
     var progressLbl: UILabel?
+    
+    var collectionView: UICollectionView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,13 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
         locationManger.delegate = self
         configureLocationServices()
         addDoubleTap()
+        
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView?.register(PhotoCell.self, forCellWithReuseIdentifier: "photoCell")
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        collectionView?.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
+        pullUpView.addSubview(collectionView!)
     }
     
     func addDoubleTap() {
@@ -51,7 +60,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
         spinner.color = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
         spinner.center = CGPoint(x: screenSize.width / 2, y: pullUpView.frame.height / 2)
         spinner.startAnimating()
-        pullUpView.addSubview(spinner)
+        collectionView?.addSubview(spinner)
     }
     
     func addProgressLbl() {
@@ -61,7 +70,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
         progressLbl?.textColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1)
         progressLbl?.textAlignment = .center
         progressLbl?.text = "12/40 PHOTOS LOADED"
-        pullUpView.addSubview(progressLbl!)
+        collectionView?.addSubview(progressLbl!)
     }
     
     func removeProgressLbl () {
@@ -166,4 +175,21 @@ extension MapVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         centerMapOnUserLocation()
     }
+}
+
+extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 8
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell {
+            cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+            return cell
+        } else {
+            return PhotoCell()
+        }
+    }
+    
+    
 }
