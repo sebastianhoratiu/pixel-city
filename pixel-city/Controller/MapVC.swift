@@ -132,6 +132,8 @@ extension MapVC: MKMapViewDelegate {
         let annotation = DroppablePin(coordinate: touchCoordinate, identifier: "droppablePin")
         mapView.addAnnotation(annotation)
         
+        print(flickrUrl(forApiKey: API_KEY, withAnnotation: annotation, andNumberOfPhotos: 40))
+        
         centerMap(arround: touchCoordinate)
         
         animateViewUp()
