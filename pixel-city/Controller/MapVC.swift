@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Alamofire
+import AlamofireImage
 
 class MapVC: UIViewController, UIGestureRecognizerDelegate {
     
@@ -26,6 +28,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     var progressLbl: UILabel?
     
     var collectionView: UICollectionView?
+    
+    var imageUrlArray = [String]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +136,7 @@ extension MapVC: MKMapViewDelegate {
         let annotation = DroppablePin(coordinate: touchCoordinate, identifier: "droppablePin")
         mapView.addAnnotation(annotation)
         
-        print(flickrUrl(forApiKey: API_KEY, withAnnotation: annotation, andNumberOfPhotos: 40))
+        print("flickUrl: \(flickrUrl(forApiKey: API_KEY, withAnnotation: annotation, andNumberOfPhotos: 10))")
         
         centerMap(arround: touchCoordinate)
         
@@ -140,6 +144,10 @@ extension MapVC: MKMapViewDelegate {
         addSpinner()
         addProgressLbl()
         addSwipe()
+        
+        retireveUrls(forAnnontation: annotation) { (true) in
+            
+        }
     }
     
     func removePin() {
@@ -161,6 +169,24 @@ extension MapVC: MKMapViewDelegate {
         */
         let coordinateRegion = MKCoordinateRegion(center: coordinate, latitudinalMeters: regionRadiusMeters, longitudinalMeters: regionRadiusMeters)
         mapView.setRegion(coordinateRegion, animated: true)
+    }
+    
+    func retireveUrls(forAnnontation annotation: DroppablePin, handler: @escaping (_ status: Bool) -> ()) {
+        imageUrlArray = []
+        Alamofire.request(flickrUrl(forApiKey: API_KEY, withAnnotation: annotation, andNumberOfPhotos: 10)).responseJSON { (response) in
+            print("response: \(response)")
+           
+            guard let json = response.result.value as? Dictionary<String, AnyObject> else { return }
+            print ("json: \(json)")
+            
+            guard let photos = json ["photos"] as? Dictionary<String, AnyObject> else { return }
+            print("photos: \(photos)")
+            
+            guard let photo = photos["photo"] as? Array<AnyObject> else {
+                print("Something went wrong while getting photo[]")
+                return }
+            print ("photo: \(photo)")
+        }
     }
     
 }
