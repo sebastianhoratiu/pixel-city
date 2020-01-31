@@ -146,7 +146,7 @@ extension MapVC: MKMapViewDelegate {
         addSwipe()
         
         retireveUrls(forAnnontation: annotation) { (true) in
-            
+            print (self.imageUrlArray)
         }
     }
     
@@ -173,19 +173,48 @@ extension MapVC: MKMapViewDelegate {
     
     func retireveUrls(forAnnontation annotation: DroppablePin, handler: @escaping (_ status: Bool) -> ()) {
         imageUrlArray = []
+        
         Alamofire.request(flickrUrl(forApiKey: API_KEY, withAnnotation: annotation, andNumberOfPhotos: 10)).responseJSON { (response) in
             print("response: \(response)")
            
             guard let json = response.result.value as? Dictionary<String, AnyObject> else { return }
-            print ("json: \(json)")
+            print ("response.result.value as Dictionary<String, AnyObject>: \(json)")
             
-            guard let photos = json ["photos"] as? Dictionary<String, AnyObject> else { return }
-            print("photos: \(photos)")
+            guard let photosDict = json ["photos"] as? Dictionary<String, AnyObject> else { return }
+            print("photos: \(photosDict)")
             
-            guard let photo = photos["photo"] as? Array<AnyObject> else {
-                print("Something went wrong while getting photo[]")
-                return }
-            print ("photo: \(photo)")
+            guard let photoDictArray = photosDict["photo"] as? Array<Dictionary<String,AnyObject>> else {
+                print("Something went wrong while getting photoDictArray[]")
+                return
+            }
+            print ("photoDictArray: \(photoDictArray)")
+            
+            for photo in photoDictArray {
+//                URL structure is slightly diffferent than in the tutorial,
+//                maybe it just changed since the the lesson was recorded
+//                Basically the URL is like this
+//                https://farm{farm-id}.staticflickr.com/{server-id}/{id}_{secret}_{size}.jpg
+//                where the _{size} is optional
+//                More details here:
+//                https://www.flickr.com/services/api/misc.urls.html
+                
+                print("photo=\(photo)")
+                
+                //JSONDecoder version with Swift 4
+                //I'm leaving this here for my reference, as a different way of doin this
+//                do {
+//                    let flickPhoto2 = try JSONDecoder().decode(FlickPhoto.self, from: photo as! Data)
+//                    print("farm safely unwrapped =\(flickPhoto2.farm)")
+//
+//                } catch let jsonErr {
+//                    print(jsonErr)
+//                }
+                
+                let postUrl = "https://farm\(photo["farm"]!).staticflickr.com/\(photo["server"]!)/\(photo["id"]!)_\(photo["secret"]!)_c.jpg"
+                print("postUrl=\(postUrl)")
+                self.imageUrlArray.append(postUrl)
+            }
+            handler(true)
         }
     }
     
