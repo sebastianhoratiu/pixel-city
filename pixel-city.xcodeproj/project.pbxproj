@@ -15,11 +15,12 @@
 		4A7A58692323A494007C2B8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A7A58672323A494007C2B8F /* Main.storyboard */; };
 		4A7A586B2323A496007C2B8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A7A586A2323A496007C2B8F /* Assets.xcassets */; };
 		4A7A586E2323A496007C2B8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A7A586C2323A496007C2B8F /* LaunchScreen.storyboard */; };
-		5446734B2D5C37F37BFAC1DA /* Pods_pixel_city.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE441B44A695F9DA66F52321 /* Pods_pixel_city.framework */; };
+		913F5B8988ECDA3640941EE3 /* libPods-pixel-city.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EDFA366FB071A76E65F85BF /* libPods-pixel-city.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0329E20C066BF2A89546F930 /* Pods-pixel-city.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pixel-city.release.xcconfig"; path = "Pods/Target Support Files/Pods-pixel-city/Pods-pixel-city.release.xcconfig"; sourceTree = "<group>"; };
+		0EDFA366FB071A76E65F85BF /* libPods-pixel-city.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-pixel-city.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2DEF183173DC8346FE916605 /* Pods-pixel-city.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pixel-city.debug.xcconfig"; path = "Pods/Target Support Files/Pods-pixel-city/Pods-pixel-city.debug.xcconfig"; sourceTree = "<group>"; };
 		4A0812752385317500EECF03 /* DroppablePin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroppablePin.swift; sourceTree = "<group>"; };
 		4A6DA53B239D18F8004B0E9C /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
@@ -31,7 +32,6 @@
 		4A7A586A2323A496007C2B8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A7A586D2323A496007C2B8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A7A586F2323A496007C2B8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EE441B44A695F9DA66F52321 /* Pods_pixel_city.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_pixel_city.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5446734B2D5C37F37BFAC1DA /* Pods_pixel_city.framework in Frameworks */,
+				913F5B8988ECDA3640941EE3 /* libPods-pixel-city.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +115,7 @@
 		DC57FE0875B9F2CAE024AA3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				EE441B44A695F9DA66F52321 /* Pods_pixel_city.framework */,
+				0EDFA366FB071A76E65F85BF /* libPods-pixel-city.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -140,7 +140,6 @@
 				4A7A585C2323A494007C2B8F /* Sources */,
 				4A7A585D2323A494007C2B8F /* Frameworks */,
 				4A7A585E2323A494007C2B8F /* Resources */,
-				B4D052FDC2D33B4BAB4CC482 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -214,26 +213,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B4D052FDC2D33B4BAB4CC482 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-pixel-city/Pods-pixel-city-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-pixel-city/Pods-pixel-city-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

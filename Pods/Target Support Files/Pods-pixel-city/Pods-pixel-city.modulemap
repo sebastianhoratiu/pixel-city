@@ -1,4 +1,4 @@
-framework module Pods_pixel_city {
+module Pods_pixel_city {
   umbrella header "Pods-pixel-city-umbrella.h"
 
   export *
