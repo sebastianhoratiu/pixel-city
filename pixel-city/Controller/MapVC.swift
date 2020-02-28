@@ -98,6 +98,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func animateViewDown() {
+        cancelAllSessions()
         pullUpViewHeightConstraint.constant = 0
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
@@ -132,6 +133,7 @@ extension MapVC: MKMapViewDelegate {
     @objc func dropPin(sender: UITapGestureRecognizer) {
         removePin()
         removeProgressLbl()
+        cancelAllSessions()
         
         let touchPoint = sender.location(in: mapView)
         let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
@@ -250,6 +252,14 @@ extension MapVC: MKMapViewDelegate {
                     handler(true)
                 }
             }
+        }
+    }
+    
+    func cancelAllSessions() {
+        Alamofire.SessionManager.default.session.getTasksWithCompletionHandler { (uRLSessionDataTask, uRLSessionUploadTask, uRLSessionDownloadTask) in
+            uRLSessionDataTask.forEach { $0.cancel() }
+            uRLSessionDownloadTask.forEach { $0.cancel()}
+            print("\n************\n\n          All session should be cancelled now\n\n************")
         }
     }
     
