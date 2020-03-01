@@ -135,6 +135,10 @@ extension MapVC: MKMapViewDelegate {
         removeProgressLbl()
         cancelAllSessions()
         
+        imageUrlArray = []
+        imageArray = []
+        collectionView?.reloadData()
+        
         let touchPoint = sender.location(in: mapView)
         let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
         print("screenSize=\(screenSize), touchPoint=\(touchPoint), touchCoordinate=\(touchCoordinate)")
@@ -162,7 +166,7 @@ extension MapVC: MKMapViewDelegate {
                     if finished {
                         self.removeSpinner()
                         self.removeProgressLbl()
-                        // reload the collection view to show the downloaded images
+                        self.collectionView?.reloadData()
                     }
                 }
             }
@@ -281,12 +285,15 @@ extension MapVC: CLLocationManagerDelegate {
 
 extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return imageArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell {
             cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
+            let imageFromIndexPath = imageArray[indexPath.row]
+            let imageView = UIImageView(image: imageFromIndexPath)
+            cell.addSubview(imageView)
             return cell
         } else {
             return PhotoCell()
