@@ -293,11 +293,20 @@ extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
             let imageFromIndexPath = imageArray[indexPath.row]
             let imageView = UIImageView(image: imageFromIndexPath)
+            imageView.contentMode = .scaleAspectFill
+//            imageView.clipsToBounds = true
             cell.addSubview(imageView)
+//            cell.contentMode = .scaleAspectFit
             return cell
         } else {
             return PhotoCell()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let popVC = storyboard?.instantiateViewController(withIdentifier: "PopVC") as? PopVC else { return }
+        popVC.initData(forImage: imageArray[indexPath.row])
+        present(popVC, animated: true, completion: nil)
     }
     
     

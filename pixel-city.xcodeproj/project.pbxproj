@@ -15,6 +15,7 @@
 		4A7A58692323A494007C2B8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A7A58672323A494007C2B8F /* Main.storyboard */; };
 		4A7A586B2323A496007C2B8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A7A586A2323A496007C2B8F /* Assets.xcassets */; };
 		4A7A586E2323A496007C2B8F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A7A586C2323A496007C2B8F /* LaunchScreen.storyboard */; };
+		4AB0210124151AC100CBB5C0 /* PopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0210024151AC100CBB5C0 /* PopVC.swift */; };
 		913F5B8988ECDA3640941EE3 /* libPods-pixel-city.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0EDFA366FB071A76E65F85BF /* libPods-pixel-city.a */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		4A7A586A2323A496007C2B8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A7A586D2323A496007C2B8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A7A586F2323A496007C2B8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4AB0210024151AC100CBB5C0 /* PopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				4A7A58652323A494007C2B8F /* MapVC.swift */,
+				4AB0210024151AC100CBB5C0 /* PopVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -222,6 +225,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AB0210124151AC100CBB5C0 /* PopVC.swift in Sources */,
 				4A6DA53E23A63B3D004B0E9C /* Constants.swift in Sources */,
 				4A6DA53C239D18F8004B0E9C /* PhotoCell.swift in Sources */,
 				4A7A58662323A494007C2B8F /* MapVC.swift in Sources */,
