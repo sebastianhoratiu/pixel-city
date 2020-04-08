@@ -296,10 +296,19 @@ extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource {
             cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
             let imageFromIndexPath = imageArray[indexPath.row]
             let imageView = UIImageView(image: imageFromIndexPath)
-            imageView.contentMode = .scaleAspectFill
+            
+            
+            imageView.contentMode = .scaleAspectFit
+//            cell.addSubview(imageView)
+//            cell.contentView.clipsToBounds = true
+//            cell.contentMode = .scaleAspectFill
+            
 //            imageView.clipsToBounds = true
-            cell.addSubview(imageView)
-//            cell.contentMode = .scaleAspectFit
+            
+            cell.contentView.addSubview(imageView)
+            
+            cell.contentView.clipsToBounds = true
+            cell.contentMode = .scaleAspectFit
             return cell
         } else {
             return PhotoCell()
