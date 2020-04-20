@@ -21,8 +21,6 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     var locationManger = CLLocationManager()
     let authorizationStatus = CLLocationManager.authorizationStatus()
     let regionRadiusMeters: Double = 1000
-    let screenSize = UIScreen.main.bounds
-
     
     var spinner = UIActivityIndicatorView(style: .whiteLarge)
     var progressLbl: UILabel?
@@ -39,15 +37,19 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
         configureLocationServices()
         addDoubleTap()
         
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UICollectionViewFlowLayout())
+        var collectionViewRect = view.bounds
+        collectionViewRect.size.height = PULLUP_VIEW_HEIGHT
+        
+        collectionView = UICollectionView(frame: collectionViewRect, collectionViewLayout: UICollectionViewFlowLayout())
         collectionView?.register(PhotoCell.self, forCellWithReuseIdentifier: "photoCell")
         collectionView?.delegate = self
         collectionView?.dataSource = self
-        collectionView?.backgroundColor = #colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1)
-        
+        collectionView?.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.6509803922, blue: 0.137254902, alpha: 1)
+                
         registerForPreviewing(with: self, sourceView: collectionView!)
         
         pullUpView.addSubview(collectionView!)
+        
     }
     
     func addDoubleTap() {
@@ -66,7 +68,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     
     func addSpinner() {
         spinner.color = #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1)
-        spinner.center = CGPoint(x: screenSize.width / 2, y: pullUpView.frame.height / 2)
+        spinner.center = CGPoint(x: SCREEN_SIZE.width / 2, y: pullUpView.frame.height / 2)
         spinner.startAnimating()
         collectionView?.addSubview(spinner)
     }
@@ -80,7 +82,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     
     func addProgressLbl() {
         progressLbl = UILabel()
-        progressLbl?.frame = CGRect(x: (screenSize.width / 2) - 120, y: pullUpView.bounds.height / 2 + spinner.bounds.height / 2, width: 240, height: 40)
+        progressLbl?.frame = CGRect(x: (SCREEN_SIZE.width / 2) - 120, y: pullUpView.bounds.height / 2 + spinner.bounds.height / 2, width: 240, height: 40)
         progressLbl?.font = UIFont(name: "Avenir Next", size: 18)
         progressLbl?.textColor = #colorLiteral(red: 0.5019607843, green: 0.5019607843, blue: 0.5019607843, alpha: 1)
         progressLbl?.textAlignment = .center
@@ -94,7 +96,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func animateViewUp() {
-        pullUpViewHeightConstraint.constant = 0.45 * screenSize.height
+        pullUpViewHeightConstraint.constant = PULLUP_VIEW_HEIGHT
+        
         UIView.animate(withDuration: 0.3) {
             self.view.layoutIfNeeded()
         }
@@ -144,7 +147,7 @@ extension MapVC: MKMapViewDelegate {
         
         let touchPoint = sender.location(in: mapView)
         let touchCoordinate = mapView.convert(touchPoint, toCoordinateFrom: mapView)
-        print("screenSize=\(screenSize), touchPoint=\(touchPoint), touchCoordinate=\(touchCoordinate)")
+        print("screenSize=\(SCREEN_SIZE), touchPoint=\(touchPoint), touchCoordinate=\(touchCoordinate)")
         
         //This is just for my benefit; I'll probably remove it later
         displayTouchCoordinate(touchPoint, touchCoordinate)
@@ -286,7 +289,7 @@ extension MapVC: CLLocationManagerDelegate {
     }
 }
 
-extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageArray.count
     }
@@ -313,6 +316,14 @@ extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource {
         } else {
             return PhotoCell()
         }
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            let cellWidth = (SCREEN_SIZE.width - (NUMBER_OF_PHOTOS_PER_ROW + 1) * IMAGE_SPACING_5) / NUMBER_OF_PHOTOS_PER_ROW
+            let cellHeight = cellWidth
+            
+            return CGSize(width: cellWidth, height: cellHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -321,7 +332,17 @@ extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource {
         present(popVC, animated: true, completion: nil)
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets.init(top: IMAGE_SPACING_5, left: IMAGE_SPACING_5, bottom: IMAGE_SPACING_5, right: IMAGE_SPACING_5)
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return IMAGE_SPACING_5
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return IMAGE_SPACING_5
+    }
 }
 
 extension MapVC: UIViewControllerPreviewingDelegate {
@@ -344,6 +365,5 @@ extension MapVC: UIViewControllerPreviewingDelegate {
     func previewingContext(_ previewingContext: UIViewControllerPreviewing, commit viewControllerToCommit: UIViewController) {
         show(viewControllerToCommit, sender: self)
     }
-    
     
 }
