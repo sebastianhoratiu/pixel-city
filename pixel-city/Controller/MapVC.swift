@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  pixel-city
 //
-//  Created by Sebastian Horatiu on 07/09/2019.
+//  Created by Sebastian Horat/Users/sebastianhoratiu/Documents/Developer/pixel-city/pixel-city/View/PhotoCell.swiftiu on 07/09/2019.
 //  Copyright © 2019 Sebastian Horatiu. All rights reserved.
 //
 
@@ -17,6 +17,8 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var pullUpViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var pullUpView: UIView!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     
     var locationManger = CLLocationManager()
     let authorizationStatus = CLLocationManager.authorizationStatus()
@@ -25,7 +27,7 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
     var spinner = UIActivityIndicatorView(style: .whiteLarge)
     var progressLbl: UILabel?
     
-    var collectionView: UICollectionView?
+//    var collectionView: UICollectionView?
     
     var imageUrlArray = [String]()
     var imageArray = [UIImage]()
@@ -37,19 +39,20 @@ class MapVC: UIViewController, UIGestureRecognizerDelegate {
         configureLocationServices()
         addDoubleTap()
         
-        var collectionViewRect = view.bounds
-        collectionViewRect.size.height = PULLUP_VIEW_HEIGHT
-        
-        collectionView = UICollectionView(frame: collectionViewRect, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView?.register(PhotoCell.self, forCellWithReuseIdentifier: "photoCell")
+        pullUpViewHeightConstraint.constant = 0
+        setupCollectionView()
+                
+        registerForPreviewing(with: self, sourceView: collectionView!)
+                
+    }
+    
+    func setupCollectionView() {
+        collectionView.setCollectionViewLayout(UICollectionViewFlowLayout(), animated: true)
+        let nib = UINib(nibName: "PhotoCell", bundle: nil)
+        collectionView.register(nib, forCellWithReuseIdentifier: "photoCell")
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.6509803922, blue: 0.137254902, alpha: 1)
-                
-        registerForPreviewing(with: self, sourceView: collectionView!)
-        
-        pullUpView.addSubview(collectionView!)
-        
     }
     
     func addDoubleTap() {
@@ -297,26 +300,12 @@ extension MapVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollect
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoCell", for: indexPath) as? PhotoCell {
             cell.backgroundColor = #colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1)
-            let imageFromIndexPath = imageArray[indexPath.row]
-            let imageView = UIImageView(image: imageFromIndexPath)
-            
-            
-            imageView.contentMode = .scaleAspectFit
-//            cell.addSubview(imageView)
-//            cell.contentView.clipsToBounds = true
-//            cell.contentMode = .scaleAspectFill
-            
-//            imageView.clipsToBounds = true
-            
-            cell.contentView.addSubview(imageView)
-            
-            cell.contentView.clipsToBounds = true
-            cell.contentMode = .scaleAspectFit
+            let imageFromIndexPath = imageArray[indexPath.item]
+            cell.imageView.image = imageFromIndexPath
             return cell
         } else {
             return PhotoCell()
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

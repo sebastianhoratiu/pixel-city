@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -17,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" zoomEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" showsUserLocation="YES" showsCompass="NO" translatesAutoresizingMaskIntoConstraints="NO" id="izT-FT-xM1">
-                                <rect key="frame" x="0.0" y="40" width="375" height="626"/>
+                                <rect key="frame" x="0.0" y="40" width="375" height="328"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="I5b-dT-1yu" userLabel="YellowBand">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
@@ -47,14 +48,40 @@
                                 <color key="backgroundColor" red="0.96470588239999999" green="0.65098039220000004" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXK-z5-orx" userLabel="pullUpView">
-                                <rect key="frame" x="0.0" y="666" width="375" height="1"/>
+                                <rect key="frame" x="0.0" y="368" width="375" height="299"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="k1O-xH-CHW">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="299"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7o4-Bh-FEB">
+                                            <size key="itemSize" width="128" height="128"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="photoCell" id="YqZ-wf-gR5">
+                                                <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" id="Bh2-t0-x47">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </collectionViewCellContentView>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="Jus-6k-59X"/>
+                                    <constraint firstItem="k1O-xH-CHW" firstAttribute="top" secondItem="pXK-z5-orx" secondAttribute="top" id="IEq-rI-nlQ"/>
+                                    <constraint firstAttribute="height" constant="299" id="Jus-6k-59X"/>
+                                    <constraint firstAttribute="trailing" secondItem="k1O-xH-CHW" secondAttribute="trailing" id="Wk4-BI-2Cf"/>
+                                    <constraint firstItem="k1O-xH-CHW" firstAttribute="leading" secondItem="pXK-z5-orx" secondAttribute="leading" id="aGM-HB-HaB"/>
+                                    <constraint firstAttribute="bottom" secondItem="k1O-xH-CHW" secondAttribute="bottom" id="hUy-75-sE7"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9nm-C6-dMI">
-                                <rect key="frame" x="292" y="579" width="67" height="67"/>
+                                <rect key="frame" x="292" y="281" width="67" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="67" id="42n-Cg-99v"/>
                                     <constraint firstAttribute="width" secondItem="9nm-C6-dMI" secondAttribute="height" multiplier="1:1" id="638-WM-NCf"/>
@@ -88,6 +115,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="k1O-xH-CHW" id="B1R-aG-oKx"/>
                         <outlet property="mapView" destination="izT-FT-xM1" id="SOA-XQ-lMz"/>
                         <outlet property="pullUpView" destination="pXK-z5-orx" id="xFJ-sb-QOm"/>
                         <outlet property="pullUpViewHeightConstraint" destination="Jus-6k-59X" id="45P-qZ-a1K"/>
@@ -95,7 +123,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.23188405797103" y="117.85714285714285"/>
+            <point key="canvasLocation" x="135.19999999999999" y="117.39130434782609"/>
         </scene>
         <!--PopVC-->
         <scene sceneID="DvI-h1-ZfA">
